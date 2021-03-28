@@ -1,25 +1,30 @@
 'use strict';
 
+function location(name, location, latitude, longitude) {
+    this.search_query = name,
+        this.formatted_query = location,
+        this.latitude = latitude,
+        this.longitude = longitude
+}
+function weather(description, valid_date) {
+    this.forecast = description,
+        this.time = valid_date;
+}
+
 const PORT = 3000; 
 const express = require('express'); 
 const cors = require('cors'); 
 
 const app = express(); 
-
 app.use(cors()); 
-
-
 
 app.get('/location', handleLocation);
 
 app.get('/weather', handleWeather);
 
-
-
 function handleLocation(request, response) {
     
     const getLocation = require('./data/location.json');
-    console.log(request.query); 
     const city = request.query.city; 
    
     let obj = {
@@ -35,7 +40,6 @@ function handleLocation(request, response) {
 
 function handleWeather(request, response) {
     
-
     const data = require('./data/weather.json');
     const name = data.city_name;
     const weatherResponse = [];
@@ -49,6 +53,5 @@ function handleWeather(request, response) {
     });
     response.send(weatherResponse);
 }
-
 
 app.listen(PORT, ()=> console.log(`App is running on Server on port: ${PORT}`))
